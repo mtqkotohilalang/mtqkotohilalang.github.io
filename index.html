@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donasi untuk Acara MTQ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 0;
+            margin: 0;
+            background-color: #00A8B5;
+            overflow-x: hidden;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #008C9E;
+            padding: 15px 40px;
+            width: calc(100% - 80px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+        .navbar h2 {
+            color: white;
+            margin: 0;
+        }
+        .navbar .social-icons {
+            display: flex;
+            gap: 15px;
+            padding-right: 20px;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            font-size: 24px;
+        }
+        .navbar a:hover {
+            color: #93c5fd;
+        }
+        .content {
+            margin-top: 100px;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+        }
+        .widget {
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .widget img {
+            width: 100%;
+            border-radius: 8px;
+        }
+        .donate-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 18px;
+            color: white;
+            background: #008C9E;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .donate-btn:hover {
+            background: #00778A;
+        }
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+        }
+        .img {
+            max-width: 1000px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particles"></canvas>
+    <div class="navbar">
+        <h2>MTQ Ramadhan</h2>
+        <div class="social-icons">
+            <a href="https://www.instagram.com/sumbangannykaka" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://wa.me/6283848112375" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        </div>
+    </div>
+    
+    <div class="content">
+        <div class="widget">
+            <h1>Dukung Acara MTQ Kami</h1>
+            <p>Dalam rangka menyukseskan acara Musabaqah Tilawatil Quran (MTQ) di bulan Ramadhan yang akan diselenggarakan di <strong>Masjid Jihad Kotohilalang, Lambah</strong>, kami mengajak Bapak/Ibu/Saudara/i untuk berpartisipasi dengan memberikan donasi.</p>
+            <p>Donasi Anda akan sangat berarti untuk kelancaran acara ini.</p>
+            <a href="https://saweria.co/sumbangannyakk" class="donate-btn">Donasi Sekarang</a>
+        </div>
+        
+        <div class="widget">
+            <h2>Kontak & Donasi</h2>
+            <p>Hubungi kami di WhatsApp: <a href="https://wa.me/6283848112375" target="_blank">+62 838-4811-2375</a></p>
+            <p>Donasi melalui DANA: 0838-4811-2375</p>
+        </div>
+        
+        <div class="widget">
+            <h2>QR Code Saweria</h2>
+            <p>Scan QR Code berikut untuk berdonasi melalui Saweria:</p>
+            <img src="qrr.png" alt="QR Code Saweria">
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById("particles");
+        const ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const particlesArray = [];
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 4 + 1;
+                this.speedX = Math.random() * 3 - 1.5;
+                this.speedY = Math.random() * 3 - 1.5;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.size > 0.2) this.size -= 0.02;
+            }
+            draw() {
+                ctx.fillStyle = "white";
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.closePath();
+                ctx.fill();
+            }
+        }
+
+        function init() {
+            for (let i = 0; i < 100; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+                if (particlesArray[i].size <= 0.2) {
+                    particlesArray.splice(i, 1);
+                    particlesArray.push(new Particle());
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+
+        init();
+        animate();
+    </script>
+</body>
+</html>
